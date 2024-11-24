@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+    django:
+        build: 
+          context: .
+          dockerfile: Dockerfile
+        container_name: django
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+          - .:/app
+        ports:
+          - 8000:8000        
+        depends_on:
+          - db
+        env_file:
+          - env.dev
+
+    db:
+      image: postgres:17
+      container_name: secret_pg
+      environment:
+        - POSTGRES_DB=secret_pg
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=password
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+    
+
+volumes:
+  pgdata:
