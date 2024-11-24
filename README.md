@@ -17,10 +17,10 @@ The application is containerized and can be run with Docker.
 
 2. **Install Dependencies**:
    ```bash
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
 
 3. **Set up Environment Variables**:
-   Create a .env file and set the following list of environment variables:
+   Create an env.dev file in root of the project and set the following list of environment variables:
    (and rename the variables in docker-compose.yml accordingly)
    ```bash
    DEBUG=1
@@ -40,7 +40,10 @@ The application is containerized and can be run with Docker.
 5. **Run the Containers and Migrations**
    ```bash
    docker-compose up --build -d
-   docker-compose exec django python manage.py migrate
+
+   When done, kill the containers:
+   docker-compose down
+
 
 ## API Usage (curl)
    ```bash
