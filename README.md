@@ -43,33 +43,20 @@ The application is containerized and can be run with Docker.
    docker-compose exec django python manage.py migrate
 
 ## API Usage (curl)
-1. **Generate a new Secret**:
    ```bash
-curl -X POST "http://localhost:8000/api/generate/" -H "Content-Type: application/json" -d '{"secret": "your_secret", "passphrase": "your_passphrase", "ttl": 600}'
+1. Generate a New Secret
+   curl -X POST "http://localhost:8000/api/generate/" -H "Content-Type: application/json" -d '{"secret": "your_secret", "passphrase": "your_passphrase", "ttl": 600}'
+Response: {"secret_key": "generated_secret_key"}
 
-## Response:
-   ```bash
-   {  "secret_key": "generated_secret_key"  }
+2. Retrieve a Secret
+   curl -X GET "http://localhost:8000/api/secrets/generated_secret_key/?" -H "Content-Type: application/json" --data-urlencode "passphrase=your_passphrase"
+Response: {"secret": "your_secret"}
 
-2. **Retrieve a Secret**:
-   ```bash
-curl -X GET "http://localhost:8000/api/secrets/generated_secret_key/?" -H "Content-Type: application/json" --data-urlencode "passphrase=your_passphrase"
-
-## Response:
-   ```bash
-   {
-    "secret": "your_secret"
-   }
-
-## Example
-1. 
-   ```bash
-curl -X POST "http://localhost:8000/api/generate/" -H "Content-Type: application/json" -d '{"secret": "i forgot to turn off the oven", "passphrase": "remember", "ttl": 600}'
+Example:
+1. curl -X POST "http://localhost:8000/api/generate/" -H "Content-Type: application/json" -d '{"secret": "i forgot to turn off the oven", "passphrase": "remember", "ttl": 600}'
 
 --> {"secret_key":"eN_x0CT94B1ap6YOG0GkQ5PtjpBUpy9ZoF1J3hLRsqA="}
 
-2. 
-   ```bash
-curl -X GET "http://localhost:8000/api/secrets/eN_x0CT94B1ap6YOG0GkQ5PtjpBUpy9ZoF1J3hLRsqA=/?passphrase=remember"
+2. curl -X GET "http://localhost:8000/api/secrets/eN_x0CT94B1ap6YOG0GkQ5PtjpBUpy9ZoF1J3hLRsqA=/?passphrase=remember"
 
 --> {"secret":"i forgot to turn off the oven"}
