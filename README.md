@@ -15,12 +15,17 @@ The application is containerized and can be run with Docker.
    git clone https://github.com/hani-momo/onetimesecret-api-service.git
    cd onetimesecret-api-service
 
-2. **Install Dependencies**:
+2. **Create & acrivate virtual env:**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   
+3. **Install Dependencies**:
    ```bash
    pip3 install -r requirements.txt
 
-3. **Set up Environment Variables**:
-   Create an env.dev file in root of the project and set the following list of environment variables:
+4. **Set up your Environment Variables (if needed)**:
+   In env.dev set your own values for the following environment variables:
    (and rename the variables in docker-compose.yml accordingly)
    ```bash
    DEBUG=1
@@ -33,12 +38,13 @@ The application is containerized and can be run with Docker.
    SQL_HOST=db
    SQL_PORT=5432
 
-4. **Set Executable Permissions for the entrypoint script**
+5. **Set Executable Permissions for the entrypoint script**
    ```bash
    chmod +x secret_manager/entrypoint.sh
 
-5. **Run the Containers and Migrations**
+6. **Run the Containers and Migrations**
    ```bash
+   python manage.py migrate
    docker-compose up --build -d
 
    When done, kill the containers:
